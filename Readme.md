@@ -19,6 +19,61 @@ TIC-TAC-TOE — это веб-приложение для игры в крест
 - **Гибкость**: Легковесная архитектура Flask позволяет быстро масштабировать функционал  
 - **Производительность**: Оптимизированная работа с базой данных через SQLAlchemy  
 
+## Установка и настройка
+
+### Установка зависимостей
+
+```bash
+# Установка PostgreSQL и утилит
+sudo apt update
+sudo apt install postgresql postgresql-contrib build-essential
+
+# Создание виртуального окружения и установка пакетов
+python3 -m venv .venv
+source ./.venv/bin/activate
+pip install flask flask-migrate flask_jwt_extended pydantic flask_wtf psycopg2
+```
+
+### Если запуск происходит первый раз необходимо создать базу данных
+```bash
+# Переходим в интерактивный режим postgres
+sudo -u postgres psql -W 
+# Создаем БД, имя этой базы данных указываем при подключении в файле __init__.py
+CREATE DATABASE my_database;
+```
+```python
+# Описываем подключение к БД в файле app/__init__.py
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:password@localhost:5432/my_database'
+# postgres - имя пользователя для подключения к БД
+# password - пароль для указанного пользователя
+# localhost - хост, где расположена БД
+# 5432 - порт для подключения (5432 - стандартный порт PostgreSQL)
+# my_database - имя базы данных, к которой нужно подключиться
+```
+
+### Настройка переменной окружения
+
+```bash
+# Настроим переменную окружения, которая указывает Flask, какой файл является 
+# главным (входной точкой) приложения.
+export FLASK_APP=main.py 
+```
+
+### Для первого запуска
+
+```bash
+# Создадим папку migrations для системы миграций.
+flask db init
+# Cгенерируем новую миграцию на основе изменений в моделях SQLAlchemy.
+flask db migrate -m "комментарий к миграции"
+# Применяем все ожидающие миграции к базе данных.
+flask db upgrade
+```
+
+### Запуск приложения
+```bash
+flask run
+```
 ## Структура таблиц БД:
 
 ### `User` - Информация об игроках
