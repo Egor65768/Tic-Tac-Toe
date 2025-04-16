@@ -1,0 +1,95 @@
+body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8f0;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            position: relative; /* Позволяет позиционировать элементы относительно body */
+        }
+
+        h1 {
+            color: #2e8b2e;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        form {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 350px;
+            display: flex;
+            flex-direction: column; /* Вертикальное расположение элементов */
+            align-items: center; /* Центрирование элементов */
+        }
+
+        div {
+            margin-bottom: 15px;
+            width: 100%; /* Занять всю ширину формы */
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="email"] {
+            width: 90%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        input[type="submit"] {
+            background-color: #2e8b2e;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 95%;
+            margin-top: 10px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #3cb371;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        span {
+            font-size: 0.9em;
+        }
+
+        .error {
+            color: red;
+        }
+
+        .success {
+            color: green;
+        }
+
+        .menu-button {
+            position: absolute; /* Абсолютное позиционирование */
+            top: 20px; /* Отступ от верхнего края */
+            left: 20px; /* Отступ от левого края */
+            padding: 10px 20px; /* Отступы для кнопки */
+            font-size: 16px; /* Размер шрифта */
+            cursor: pointer;
+            border: none; /* Убираем стандартную рамку */
+            border-radius: 8px; /* Скругленные углы */
+            background-color: #4CAF50; /* Цвет фона */
+            color: white; /* Цвет текста */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Тень для кнопки */
+            transition: all 0.3s ease; /* Плавный переход для эффектов */
+        }
+
+        .menu-button:hover {
+            background-color: #3cb371; /* Изменение цвета при наведении */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Увеличение тени при наведении */
+            transform: translateY(-2px); /* Подъем кнопки при наведении */
+        }

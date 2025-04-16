@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Поиск</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/find_style.css') }}">
+</head>
+<body>
+    <button class="menu-button" onclick="window.location.href='{{ url_for('start_project') }}'">Меню</button>
+
+<h1>Поиск пользователя по ID</h1>
+
+        <form id="find-user" method="POST" action="/find_user">
+            <div class="form-group">
+                <label for="user_id">Введите ID пользователя:</label>
+                <input type="text" id="user_id" name="user_id" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Поиск</button>
+        </form>
+
+        <form id="find-user-token" method="POST" action="/find_user_token">
+            <div class="form-group">
+                <label for="user_token">Введите access токен пользователя:</label>
+                <input type="text" id="user_token" name="user_token" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Поиск</button>
+        </form>
+
+        {% if user is not none %}
+            <h2 class="mt-4">Результаты поиска:</h2>
+            {% if user %}
+                <div class="alert alert-success">
+                    <p><strong>Имя:</strong> {{ user.name }}</p>
+                    <p><strong>Логин:</strong> {{ user.login }}</p>
+                    <p><strong>Статус:</strong> {{ user.status }}</p>
+                </div>
+            {% endif %}
+            {% if error %}
+                <div class="alert alert-danger">
+                    <p>Пользователь не найден.</p>
+                </div>
+            {% endif %}
+        {% endif %}
+        {% with messages = get_flashed_messages(with_categories=true) %}
+                      {% if messages %}
+                        <ul>
+                        {% for category, message in messages %}
+                          <li class="{{ category }}">{{ message }}</li>
+                        {% endfor %}
+                        </ul>
+                      {% endif %}
+                    {% endwith %}
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

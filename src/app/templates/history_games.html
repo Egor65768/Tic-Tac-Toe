@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>История игр</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/wait_page.css') }}">
+</head>
+<body>
+    <div class="header">
+        <button class="menu-button" onclick="window.location.href='{{ url_for('start_project') }}'">Меню</button>
+    </div>
+    {% if not all_games %}
+    <form id="all-history-games" action="{{ url_for('all_history_games') }}" method="post">
+        <button type="submit" class="menu-button">Вся история</button>
+    </form>
+    <h1>Моя история игр</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Противник</th>
+                    <th>Дата</th>
+                    <th>Результат</th>
+                    <th>Игра</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if games %}
+                    {% for game in games %}
+                    <tr>
+                        <td>
+                            {% if game.opponent %}
+                                <span>{{ game.opponent }}</span>
+                            {% else %}
+                                <span>Бот</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ game.timestamp }}</td>
+                        <td>
+                            {% if game.result == 0 %}
+                                {% if game.game_was_over %}
+                                    <span>Победа</span>
+                                {% else %}
+                                    <span>Победа, противник сдался</span>
+                                {% endif %}
+                            {% elif game.result == 1 %}
+                                {% if game.game_was_over %}
+                                    <span>Поражение</span>
+                                {% else %}
+                                    <span>Поражение, вы сдались</span>
+                                {% endif %}
+                            {% elif game.result == 2 %}
+                                <span>Ничья</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                           <table class="game-table">
+                                {% for row_index in range(3) %}
+                                    <tr>
+                                        {% for col_index in range(3) %}
+                                            <td>
+                                                {% if game.board[row_index][col_index] == 1 %}
+                                                    X
+                                                {% elif game.board[row_index][col_index] == 2 %}
+                                                    O
+                                                {% else %}
+                                                    &nbsp;
+                                                {% endif %}
+                                            </td>
+                                        {% endfor %}
+                                    </tr>
+                                {% endfor %}
+                            </table>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="4">Игры отсутствуют</td> <!-- Изменено на 4 колонки -->
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    {% else %}
+    <form id="history-games" action="{{ url_for('history_games') }}" method="post">
+        <button type="submit" class="menu-button">История игр</button>
+    </form>
+    <h1>Глобальная история игр</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Игрок 1</th>
+                    <th>Игрок 2</th>
+                    <th>Дата</th>
+                    <th>Победитель</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% if games %}
+                {% for game in games %}
+                <tr>
+                    <td>{{ game.user_1 }}</td>
+                    <td>{{ game.user_2 }}</td>
+                    <td>{{ game.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                    <td>
+                        {% if game.result == 2 %}
+                            <span>Ничья</span>
+                        {% else %}
+                            <span>{{ game.user_1 }}</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            {% endif %}
+        </tbody>
+
+    {% endif %}
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

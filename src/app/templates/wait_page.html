@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Пользователи в ожидании</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/wait_page.css') }}">
+</head>
+<body>
+    <div class="header">
+        <button class="menu-button" onclick="window.location.href='{{ url_for('start_project') }}'">Меню</button>
+    </div>
+    <form id="multi-player-form" action="{{ url_for('wait') }}" method="post">
+        <button class="menu-button" type="submit">Обновить</button>
+    </form>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul>
+          {% for category, message in messages %}
+            {% if category == 'info' %}
+              <li>{{ message }}</li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    <h1>Пользователи в ожидании</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Имя пользователя</th>
+                <th>Логин</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.name }}</td>
+                <td>{{ user.login }}</td>
+                <td>
+                    <form id="send-invitation" action="{{ url_for('online_game') }}" method="post">
+                        <input type="hidden" name="login" value="{{ user.login }}">
+                        <button type="submit" class="menu-button">Пригласить</button>
+                    </form>
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                      {% if messages %}
+                        <ul>
+                        {% for category, message in messages %}
+                          <li class="{{ category }}">{{ message }}</li>
+                        {% endfor %}
+                        </ul>
+                      {% endif %}
+                    {% endwith %}
+                </td>
+
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <h1>Ваши приглашения</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Имя пользователя</th>
+                <th>Логин</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in send_user %}
+            <tr>
+                <td>{{ user.name }}</td>
+                <td>{{ user.login }}</td>
+                <td>
+                    <form id="accepted-user" action="{{ url_for('accepted_user') }}" method="post" style="display:inline;">
+                        <input type="hidden" name="login" value="{{ user.login }}">
+                        <button type="submit" class="menu-button">Принять</button>
+                    </form>
+                    <form id = "reject-user" action="{{ url_for('reject_user') }}" method="post" style="display:inline;">
+                        <input type="hidden" name="login" value="{{ user.login }}">
+                        <button type="submit" class="reject-button">Отклонить</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

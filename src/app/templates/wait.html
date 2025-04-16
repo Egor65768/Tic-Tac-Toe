@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ожидание пользователя</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/start_page.css') }}">
+</head>
+<body>
+    <div class="header">
+        <h1>Ожидаем игрока {{user}}</h1>
+    </div>
+    <form id="wait-status" action="{{ url_for('wait_status') }}" method="post">
+        <input type="hidden" name="login" value="{{ user }}">
+        <button type="submit" class="start-button">Обновить</button>
+    </form>
+    <form id="wait-user" action="{{ url_for('wait') }}" method="post">
+        <button type="submit" class="start-button">Отменить</button>
+    </form>
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

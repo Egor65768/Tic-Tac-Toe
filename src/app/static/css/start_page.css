@@ -1,0 +1,76 @@
+body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        h1 {
+            text-align: center; /* Выравнивание по центру */
+            margin-top: 20px; /* Отступ сверху */
+            color: #333; /* Цвет текста */
+        }
+         button {
+            padding: 10px 20px;
+            font-size: 30px;
+            cursor: pointer;
+            margin-top: 50px; /* Отступ сверху для кнопки */
+        }
+        .login-button {
+            background-color: #4CAF50; /* Светло-зеленый фон для кнопки "Вход" */
+            color: white; /* Белый текст */
+            border: none; /* Убираем стандартную рамку */
+            border-radius: 5px; /* Закругленные углы */
+            transition: background-color 0.3s, transform 0.2s; /* Плавный переход для фона и трансформации */
+        }
+
+        .login-button:hover {
+            background-color: #388E3C; /* Темнее зеленый при наведении */
+            transform: scale(1.05); /* Увеличение при наведении */
+        }
+
+        .start-button {
+            padding: 10px 20px;
+            font-size: 30px;
+            cursor: pointer;
+            margin-top: 50px; /* Отступ сверху для кнопки */
+        }
+        .button-container {
+            position: absolute; /* Изменено на абсолютное позиционирование */
+            top: 5px; /* Отступ сверху */
+            left: 20px; /* Отступ справа */
+        }
+        .button-container1 {
+            position: absolute; /* Изменено на абсолютное позиционирование */
+            top: 5px; /* Отступ сверху */
+            left: 150px; /* Отступ справа */
+        }
+        .button-container2 {
+            position: absolute; /* Изменено на абсолютное позиционирование */
+            top: 85px; /* Отступ сверху */
+            left: 20px; /* Отступ справа */
+        }
+        .flash-messages {
+        margin: 20px 0;
+        padding: 10px;
+        border-radius: 5px;
+        }
+
+        .flash-messages ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .flash-messages li {
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 4px;
+        }
+
+        .flash-messages .warning {
+            background-color: #fff3cd; /* Желтый фон для предупреждений */
+            color: #856404; /* Темно-желтый текст */
+            border: 1px solid #ffeeba; /* Граница для предупреждений */
+        }

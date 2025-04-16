@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Таблица лучших</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/wait_page.css') }}">
+</head>
+<body>
+    <div class="header">
+        <button class="menu-button" onclick="window.location.href='{{ url_for('start_project') }}'">Меню</button>
+    </div>
+    <h1>Таблица лучших</h1>
+        <form id="top-Users-Form" method="POST" action="/best_users">
+            <div class="form-group">
+                <label for="topCount">Введите ID пользователя:</label>
+                <input type="number" id="topCount" name="topCount" class="form-control" min="1" value="{{ top_count }}" required>
+            </div>
+            <button type="submit" class="menu-button">Поиск</button>
+        </form>
+    <table>
+        <thead>
+            <tr>
+                <th>Место в рейтинге</th>
+                <th>Логин</th>
+                <th>Победы</th>
+                <th>Ничьи</th>
+                <th>Поражения</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if users %}
+                {% for user in users %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ user.user_login }}</td>
+                        <td>{{ user.win }}</td>
+                        <td>{{ user.draw }}</td>
+                        <td>{{ user.lose }}</td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="5">Нет доступных данных.</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

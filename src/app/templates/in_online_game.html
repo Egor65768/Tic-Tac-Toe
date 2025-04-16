@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/game_page.css') }}">
+    <title>Tic-Tac-Toe</title>
+</head>
+<body>
+    <h1>Tic-Tac-Toe</h1>
+    {% if user_2 is not none %}
+        {% if game_status == type_status.FAIL_MOVE or game_status == type_status.IN_GAME%}
+            <h3>Игрок {{ user_1 }} ходит O</h3>
+            <h3>Игрок {{ user_2 }} ходит X</h3>
+            <h3>Сейчас ходит {{ user_move }}</h3>
+        {% endif %}
+    {% endif %}
+
+    <form action="{{ url_for('in_game', game_uuid=game_uuid) }}" method="post">
+        <table>
+            {% for row_index in range(3) %}
+                <tr>
+                    {% for col_index in range(3) %}
+                        <td>
+                            <button type="submit" name="cell" value="{{ col_index ~ ' ' ~ row_index }}">
+                                {% if board[row_index][col_index] == 1 %}
+                                    X
+                                {% elif board[row_index][col_index] == 2 %}
+                                    O
+                                {% else %}
+                                    &nbsp;
+                                {% endif %}
+                            </button>
+                        </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+    </form>
+    {% if game_status == type_status.WIN_CROSS %}
+        {% if user_2 is none %}
+            <h2>Выиграл игрок: Бот !</h2>
+        {% else %}
+            <h2>Выиграл игрок: {{ user_2 }} !</h2>
+        {% endif %}
+    {% elif game_status == type_status.WIN_ZERO %}
+        <h2>Выиграл игрок: {{ user_1 }} !</h2>
+    {% elif game_status == type_status.DRAW %}
+        <h2>Ничья!</h2>
+    {% elif game_status == type_status.FAIL_MOVE %}
+        <h2 class="warning">This move cannot be made!</h2>
+    {% endif %}
+    {% if user_2 is none %}
+        <form id = "single-player-form" action="{{ url_for('create_game') }}" method="post">
+            <button type="submit" class="restart-button">Новая игра</button>
+        </form>
+    {% elif game_status == type_status.FAIL_MOVE or game_status == type_status.IN_GAME%}
+        <form action="{{ url_for('in_game',game_uuid=game_uuid) }}" method="post">
+            <input type="hidden" name="flag" value="1">
+            <button type="submit" class="start-button">Обновить</button>
+        </form>
+    {% endif %}
+
+<form id="delete-game" action="{{ url_for('delete_game_and_navigate_home') }}" method="POST">
+    <input type="hidden" name="game_id" value="{{ game_uuid }}">
+    <button type="submit" class="menu-button">Меню</button>
+</form>
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

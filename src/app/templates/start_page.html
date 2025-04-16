@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic-Tac-Toe</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/start_page.css') }}">
+
+</head>
+<body>
+
+    <h1>Tic-Tac-Toe</h1>
+
+    {% if UserAuthenticator.is_authenticated() %}
+        <div class="button-container">
+            <form id="refresh-token" action="{{ url_for('refresh_refresh_token') }}" method="post">
+                <button type="submit" class="login-button">{{ UserAuthenticator.get_name() }}</button>
+            </form>
+        </div>
+    <div class="button-container2">
+            <form action="{{ url_for('logout') }}" method="get">
+                <button type="submit" class="login-button">Выход</button>
+            </form>
+        </div>
+    {% else %}
+        <div class="button-container">
+            <form action="{{ url_for('login') }}" method="get">
+                <button type="submit" class="login-button">Вход</button>
+            </form>
+        </div>
+        <div class="button-container1">
+            <form action="{{ url_for('register') }}" method="get">
+                <button type="submit" class="login-button">Регистрация</button>
+            </form>
+        </div>
+    {% endif %}
+
+    <form id="single-player-form" action="{{ url_for('create_game') }}" method="post">
+        <button type="submit" class="start-button">Одиночная игру</button>
+    </form>
+    <form id="multi-player-form" action="{{ url_for('wait') }}" method="post">
+        <button type="submit" class="start-button">Мультиплеер</button>
+    </form>
+    <form id="history-games" action="{{ url_for('history_games') }}" method="post">
+        <button type="submit" class="start-button">История игр</button>
+    </form>
+    <form id="table-best-user" action="{{ url_for('best_users') }}" method="post">
+        <button type="submit" class="start-button">Таблица лучших игроков</button>
+    </form>
+    <form id="find-user" action="{{ url_for('find_user') }}" method="get">
+        <button type="submit" class="start-button">Поиск пользователя</button>
+    </form>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-messages">
+          <ul>
+            {% for category, message in messages %}
+              <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+    {% endwith %}
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
